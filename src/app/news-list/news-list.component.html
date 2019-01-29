@@ -1,0 +1,7 @@
+<h2>Serach Result</h2>
+
+<ul class="news-list">
+  <li *ngFor="let hit of hits">
+    <app-news-detail [hit]="hit"></app-news-detail>
+  </li>
+</ul>
