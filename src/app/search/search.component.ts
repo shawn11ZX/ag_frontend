@@ -3,22 +3,23 @@ import {NewsService} from '../news.service';
 import {SearchResult} from '../search-result';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {FormControl, FormGroup} from '@angular/forms';
 
+class Tag {
+  value: string;
+  displayName: string;
+}
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  tags: any;
+  tags: Array<Tag>;
 
-  hitsPerPages: any;
+  hitsPerPages: Array<number>;
 
-  curPage: number;
-
-  curTag: string;
-
-  curHitsPerPage: number
+  searchForm: FormGroup;
 
   private searchTerms = new Subject<string>();
 
@@ -30,18 +31,20 @@ export class SearchComponent implements OnInit {
       {value: 'comment', displayName: 'comment'},
       {value: '', displayName: 'all'},
     ];
-    this.curTag = this.tags[0];
 
     this.hitsPerPages = [10, 20, 50, 100];
-    this.curHitsPerPage = this.hitsPerPages[0];
+
+    this.searchForm = new FormGroup({
+      tag: new FormControl(this.tags[0]),
+      hitsPerPage: new FormControl(this.hitsPerPages[0]),
+      page: new FormControl(0),
+      term: new FormControl('')
+    }, {updateOn: 'change'});
+    this.searchForm.valueChanges.subscribe(() => {
+      this.searchTerms.next(this.searchForm.value);
+    });
   }
 
-
-  // Push a search term into the observable stream.
-  search(term: string): void {
-    this.curPage = 0
-    this.searchTerms.next(term);
-  }
 
   ngOnInit(): void {
     this.searchResult$ = this.searchTerms.pipe(
@@ -49,10 +52,15 @@ export class SearchComponent implements OnInit {
       debounceTime(300),
 
       // ignore new term if same as previous term
-      distinctUntilChanged(),
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.newService.searchNews(term, this.curTag.value, this.curHitsPerPage)),
+      switchMap((form: any) => {
+        const curTerm: string = form.term;
+        const curTag: string = form.tag.value;
+        const curHitsPerPage: number  = form.hitsPerPage;
+        return this.newService.searchNews(curTerm, curTag, curHitsPerPage);
+      }),
     );
   }
 }

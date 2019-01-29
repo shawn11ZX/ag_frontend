@@ -1,22 +1,26 @@
 <div id="search-component">
   <h4>Hero Search</h4>
+  <form [formGroup]="searchForm">
+  <div>
+    <input type="text" formControlName="term" />
+    <div> Search
+      <select formControlName="tag">
+        <option *ngFor="let t of tags" [ngValue]="t">
+          {{ t.displayName }}
+        </option>
+      </select>
+    </div>
 
-  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  <div> Search
-  <select name="curTag" [(ngModel)]="curTag">
-    <option *ngFor="let tag of tags" [ngValue]="tag">
-      {{ tag.displayName }}
-    </option>
-  </select>
+    <div> Search
+      <select formControlName="hitsPerPage">
+        <option *ngFor="let count of hitsPerPages" [ngValue]="count">
+          {{ count }}
+        </option>
+      </select>
+    </div>
   </div>
+  </form>
 
-  <div> Search
-    <select name="curHitsPerPage" [(ngModel)]="curHitsPerPage">
-      <option *ngFor="let count of hitsPerPages" [ngValue]="count">
-        {{ count }}
-      </option>
-    </select>
-  </div>
 
   <div *ngIf="searchResult$ | async as result">
         <app-news-list [hits]="result.hits"></app-news-list>
