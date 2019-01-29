@@ -12,9 +12,13 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 export class SearchComponent implements OnInit {
   tags: any;
 
+  hitsPerPages: any;
+
   curPage: number;
 
   curTag: string;
+
+  curHitsPerPage: number
 
   private searchTerms = new Subject<string>();
 
@@ -27,6 +31,9 @@ export class SearchComponent implements OnInit {
       {value: '', displayName: 'all'},
     ];
     this.curTag = this.tags[0];
+
+    this.hitsPerPages = [10, 20, 50, 100];
+    this.curHitsPerPage = this.hitsPerPages[0];
   }
 
 
@@ -45,7 +52,7 @@ export class SearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.newService.searchNews(term, this.curTag.value)),
+      switchMap((term: string) => this.newService.searchNews(term, this.curTag.value, this.curHitsPerPage)),
     );
   }
 }
