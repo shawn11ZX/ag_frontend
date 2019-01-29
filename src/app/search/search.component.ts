@@ -11,6 +11,8 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 })
 export class SearchComponent implements OnInit {
 
+  curPage: number;
+
   private searchTerms = new Subject<string>();
 
   private searchResult$: Observable<SearchResult>;
@@ -20,6 +22,7 @@ export class SearchComponent implements OnInit {
 
   // Push a search term into the observable stream.
   search(term: string): void {
+    this.curPage = 0
     this.searchTerms.next(term);
   }
 

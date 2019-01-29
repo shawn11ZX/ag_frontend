@@ -5,8 +5,7 @@
 
 
     <div *ngIf="searchResult$ | async as result">
-
+        <app-news-list [hits]="result.hits"></app-news-list>
         {{result.hitsPerPage}}
-
     </div>
 </div>
