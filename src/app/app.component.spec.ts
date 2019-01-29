@@ -1,6 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {NewsService} from './news.service';
+import {Component} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -9,8 +12,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        MockSearchComponent
+      ]
     }).compileComponents();
   }));
 
@@ -33,3 +37,10 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to hack-news!');
   });
 });
+
+@Component({
+  selector: 'app-search',
+  template: ''
+})
+class MockSearchComponent {
+}

@@ -1,16 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NewsService } from './news.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import {of} from 'rxjs';
 
 describe('NewsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-   providers: [HttpClient]
+    imports: [HttpClientModule],
   }));
 
-  it('should be created', () => {
+  it('should be created', (done: DoneFn) => {
     const service: NewsService = TestBed.get(NewsService);
     expect(service).toBeTruthy();
-    service.searchNews('foo');
+    service.searchNews('foo').subscribe(value => {
+      expect(value.nbHits).toBeGreaterThanOrEqual(1)
+      done();
+    });
   });
 });
