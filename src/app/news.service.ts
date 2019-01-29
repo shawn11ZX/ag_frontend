@@ -17,12 +17,16 @@ export class NewsService {
     console.log(message);
   }
   /* GET heroes whose name contains search term */
-  searchNews(term: string): Observable<SearchResult> {
+  searchNews(term: string, tag: string): Observable<SearchResult> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of(new SearchResult());
     }
-    return this.http.get<SearchResult>(`${this.searchUrl}query=${term}`).pipe(
+    let targetUrl = `${this.searchUrl}query=${term}`;
+    if (tag) {
+      targetUrl += `&tags=${tag}`;
+    }
+    return this.http.get<SearchResult>(targetUrl).pipe(
       tap(_ => this.log(`found news matching "${term}"`)),
       catchError(this.handleError<SearchResult>('searchHeroes', new SearchResult()))
     );

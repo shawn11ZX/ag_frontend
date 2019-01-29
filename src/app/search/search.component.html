@@ -2,9 +2,13 @@
   <h4>Hero Search</h4>
 
   <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+  <select name="curTag" [(ngModel)]="curTag">
+    <option *ngFor="let tag of tags" [ngValue]="tag">
+      {{ tag.displayName }}
+    </option>
+  </select>
 
-
-    <div *ngIf="searchResult$ | async as result">
+  <div *ngIf="searchResult$ | async as result">
         <app-news-list [hits]="result.hits"></app-news-list>
         {{result.hitsPerPage}}
     </div>

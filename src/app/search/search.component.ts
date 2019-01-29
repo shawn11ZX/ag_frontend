@@ -10,14 +10,24 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  tags: any;
 
   curPage: number;
+
+  curTag: string;
 
   private searchTerms = new Subject<string>();
 
   private searchResult$: Observable<SearchResult>;
 
-  constructor(private newService: NewsService) { }
+  constructor(private newService: NewsService) {
+    this.tags = [
+      {value: 'story', displayName: 'story'},
+      {value: 'comment', displayName: 'comment'},
+      {value: '', displayName: 'all'},
+    ];
+    this.curTag = this.tags[0];
+  }
 
 
   // Push a search term into the observable stream.
@@ -35,7 +45,7 @@ export class SearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.newService.searchNews(term)),
+      switchMap((term: string) => this.newService.searchNews(term, this.curTag.value)),
     );
   }
 }
