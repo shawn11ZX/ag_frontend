@@ -10,6 +10,8 @@ export class NewsDetailComponent implements OnInit {
 
   @Input() hit: Hit;
 
+  @Input() odd: boolean;
+
   constructor() { }
 
   ngOnInit() {

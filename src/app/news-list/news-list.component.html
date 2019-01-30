@@ -1,7 +1,11 @@
-<h2>Serach Result</h2>
 
-<ul class="news-list">
-  <li *ngFor="let hit of hits">
-    <app-news-detail [hit]="hit"></app-news-detail>
-  </li>
+<ul class="list-group">
+  <ng-container *ngFor="let hit of hits; let odd=odd">
+    <a *ngIf="odd" href="{{hit.url}}" target="_blank" class="list-group-item list-group-item-primary">
+      <app-news-detail [hit]="hit"></app-news-detail>
+    </a>
+    <a *ngIf="!odd" href="{{hit.url}}" target="_blank" class="list-group-item">
+      <app-news-detail [hit]="hit"></app-news-detail>
+    </a>
+  </ng-container>
 </ul>
