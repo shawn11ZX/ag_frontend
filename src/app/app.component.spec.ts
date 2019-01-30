@@ -5,6 +5,14 @@ import {NewsService} from './news.service';
 import {Component} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
+@Component({
+  selector: 'app-search',
+  template: ''
+})
+class MockSearchComponent {
+}
+
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,9 +46,3 @@ describe('AppComponent', () => {
   });
 });
 
-@Component({
-  selector: 'app-search',
-  template: ''
-})
-class MockSearchComponent {
-}

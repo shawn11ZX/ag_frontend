@@ -13,9 +13,9 @@ describe('NewsService', () => {
     const service: NewsService = TestBed.get(NewsService);
     expect(service).toBeTruthy();
     service.searchNews('foo', '', 10).subscribe(value => {
-      expect(value.nbHits).toBeGreaterThanOrEqual(1)
-      expect(value.hits.length).toBeGreaterThan(0)
-      expect(value.hits[0].title).toBeTruthy()
+      expect(value.nbHits).toBeGreaterThanOrEqual(1);
+      expect(value.hits.length).toBeGreaterThan(0);
+      expect(value.hits[0].title).toBeTruthy();
       done();
     });
   });

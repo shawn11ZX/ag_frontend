@@ -14,8 +14,8 @@ describe('SearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SearchComponent, NewsListComponent, NewsDetailComponent],
-      imports:[ HttpClientModule, FormsModule, ReactiveFormsModule,  NgbModule],
-      
+      imports: [ HttpClientModule, FormsModule, ReactiveFormsModule,  NgbModule],
+
     })
     .compileComponents();
   }));
