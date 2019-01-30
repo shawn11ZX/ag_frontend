@@ -34,7 +34,26 @@
       <a class="navbar-brand" href="#">Total Hits {{result.nbHits}}, Total Page {{result.nbPages}}</a>
     </nav>
     <app-news-list [hits]="result.hits"></app-news-list>
-    {{result.hitsPerPage}}
+
+    <p></p>
+    <nav aria-label="Page navigation margin-xs padding-lg">
+      <ul class="pagination justify-content-center">
+        <li [ngClass]="'page-item ' + (curPage === 0 ? 'disabled' : '')">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true" (click)="setPage(curPage-1)">Previous</a>
+        </li>
+        <ng-container *ngFor="let offset of [1, 2, 3, 4, 5]">
+          <li *ngIf="curPage + offset < result.nbPages" class="page-item"><a class="page-link" (click)="setPage(curPage+offset)">{{curPage + offset + 1}}</a></li>
+        </ng-container>
+
+        <li [ngClass]="'page-item ' + (curPage === (result.nbPages - 1) ? 'disabled' : '')">
+          <a class="page-link" (click)="setPage(curPage+1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+
   </div>
+
+
 </div>
 

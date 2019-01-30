@@ -21,9 +21,12 @@ export class SearchComponent implements OnInit {
 
   searchForm: FormGroup;
 
+  curPage: number;
+
   private searchTerms = new Subject<string>();
 
   private searchResult$: Observable<SearchResult>;
+
 
   constructor(private newService: NewsService) {
     this.tags = [
@@ -37,29 +40,33 @@ export class SearchComponent implements OnInit {
     this.searchForm = new FormGroup({
       tag: new FormControl(this.tags[0]),
       hitsPerPage: new FormControl(this.hitsPerPages[0]),
-      page: new FormControl(0),
       term: new FormControl('')
     }, {updateOn: 'change'});
-    this.searchForm.valueChanges.subscribe(() => {
+    this.searchForm.valueChanges.subscribe((data) => {
+      this.curPage = 0;
       this.searchTerms.next(this.searchForm.value);
     });
+
+    this.curPage = 0;
+
   }
 
+  setPage(page: number): void {
+    this.curPage = page;
+    this.searchTerms.next(this.searchForm.value);
+  }
 
   ngOnInit(): void {
     this.searchResult$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
-      // ignore new term if same as previous term
-      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
-
       // switch to new search observable each time the term changes
       switchMap((form: any) => {
         const curTerm: string = form.term;
         const curTag: string = form.tag.value;
         const curHitsPerPage: number  = form.hitsPerPage;
-        return this.newService.searchNews(curTerm, curTag, curHitsPerPage);
+        return this.newService.searchNews(curTerm, curTag, curHitsPerPage, this.curPage);
       }),
     );
   }

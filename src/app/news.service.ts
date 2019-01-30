@@ -17,12 +17,12 @@ export class NewsService {
     console.log(message);
   }
   /* GET heroes whose name contains search term */
-  searchNews(term: string, tag: string, hitsPerPage: number): Observable<SearchResult> {
+  searchNews(term: string, tag: string, hitsPerPage: number, curPage: number = 0): Observable<SearchResult> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of(new SearchResult());
     }
-    let targetUrl = `${this.searchUrl}query=${term}&hitsPerPage=${hitsPerPage}`;
+    let targetUrl = `${this.searchUrl}query=${term}&page=${curPage}&hitsPerPage=${hitsPerPage}`;
     if (tag) {
       targetUrl += `&tags=${tag}`;
     }
