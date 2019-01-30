@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsDetailComponent } from './news-detail.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Hit} from '../hit';
 
 describe('NewsDetailComponent', () => {
   let component: NewsDetailComponent;
@@ -8,7 +10,8 @@ describe('NewsDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsDetailComponent ]
+      declarations: [ NewsDetailComponent ],
+      imports: [NgbModule]
     })
     .compileComponents();
   }));
@@ -16,6 +19,7 @@ describe('NewsDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NewsDetailComponent);
     component = fixture.componentInstance;
+    component.hit = new Hit();
     fixture.detectChanges();
   });
 

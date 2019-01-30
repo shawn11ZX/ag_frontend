@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsListComponent } from './news-list.component';
+import {Hit} from '../hit';
+import {NewsDetailComponent} from '../news-detail/news-detail.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 describe('NewsListComponent', () => {
   let component: NewsListComponent;
@@ -8,7 +11,8 @@ describe('NewsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsListComponent ]
+      declarations: [ NewsListComponent, NewsDetailComponent ],
+      imports: [NgbModule]
     })
     .compileComponents();
   }));
@@ -16,6 +20,7 @@ describe('NewsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NewsListComponent);
     component = fixture.componentInstance;
+    component.hits = [new Hit()];
     fixture.detectChanges();
   });
 
