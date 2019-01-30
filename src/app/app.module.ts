@@ -7,13 +7,16 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsDetailComponent } from './news-detail/news-detail.component';
+import { TruncatePipe } from './truncate.pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     NewsListComponent,
-    NewsDetailComponent
+    NewsDetailComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,7 @@ import { NewsDetailComponent } from './news-detail/news-detail.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

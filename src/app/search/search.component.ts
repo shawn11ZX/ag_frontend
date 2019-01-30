@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
       {value: '', displayName: 'all'},
     ];
 
-    this.hitsPerPages = [10, 20, 50, 100];
+    this.hitsPerPages = [5, 10, 20, 50, 100];
 
     this.searchForm = new FormGroup({
       tag: new FormControl(this.tags[0]),

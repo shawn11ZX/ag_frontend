@@ -10,10 +10,21 @@ export class NewsDetailComponent implements OnInit {
 
   @Input() hit: Hit;
 
-  @Input() odd: boolean;
+  isCollapsed: boolean;
+
+  mouseOver: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.isCollapsed = true;
+  }
+
+  mouseEnter() {
+    this.mouseOver = true;
+  }
+
+  mouseLeave() {
+    this.mouseOver = false;
   }
 }

@@ -1,3 +1,28 @@
-<div>
-  <span class="hit">{{hit.title}}</span> {{hit.author}}
+<div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+
+    <ng-container *ngIf="hit.url">
+      <a [href]="hit.url" target="_blank" [ngClass]="'list-group-item'">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{hit.title}}</h5>
+          <small>{{hit.created_at | date}}</small>
+        </div>
+        <small>Author: {{hit.author}}</small>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="!(hit.url)">
+      <a href="#" (click)="isCollapsed = !isCollapsed" [ngClass]="'list-group-item'">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1" > {{hit.title}}</h5>
+          <small>{{hit.created_at | date}}</small>
+        </div>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+          <div class="container">
+            <p *ngIf="hit.story_text" class="mb-1" [innerHTML]="hit.story_text "></p>
+            <p *ngIf="hit.comment_text" class="mb-1" [innerHTML]="hit.comment_text"></p>
+          </div>
+        </div>
+        <small>Author: {{hit.author}}</small>
+      </a>
+    </ng-container>
 </div>

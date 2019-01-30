@@ -1,11 +1,15 @@
 
 <ul class="list-group">
   <ng-container *ngFor="let hit of hits; let odd=odd">
-    <a *ngIf="odd" href="{{hit.url}}" target="_blank" class="list-group-item list-group-item-primary">
-      <app-news-detail [hit]="hit"></app-news-detail>
-    </a>
-    <a *ngIf="!odd" href="{{hit.url}}" target="_blank" class="list-group-item">
-      <app-news-detail [hit]="hit"></app-news-detail>
-    </a>
+
+    <ng-container *ngIf="hit.url">
+      <a [href]="hit.url" >
+        <app-news-detail [hit]="hit"></app-news-detail>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="!(hit.url)">
+        <app-news-detail [hit]="hit"></app-news-detail>
+    </ng-container>
   </ng-container>
 </ul>
