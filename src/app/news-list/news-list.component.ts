@@ -1,6 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Hit} from '../hit';
 
+/**
+ * display news list
+ * @author Shawn Change
+ */
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',

@@ -2,32 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import {NewsService} from '../news.service';
 import {SearchResult} from '../search-result';
 import {Observable, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {debounceTime, switchMap} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
 
 class Tag {
   value: string;
   displayName: string;
 }
+
+/**
+ * provide search functions and paging
+ * @author Shawn Change
+ */
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  tags: Array<Tag>;
+  tags: Array<Tag>; // available tags for user to choose
 
-  hitsPerPages: Array<number>;
+  hitsPerPages: Array<number>; // available item per page for user to choose
 
-  searchForm: FormGroup;
+  searchForm: FormGroup; // form group
 
-  curPage: number;
+  curPage: number; // current page
 
-  private searchTerms = new Subject<string>();
+  private searchTerms = new Subject<string>(); // filter form change
 
-  private searchResult$: Observable<SearchResult>;
+  private searchResult$: Observable<SearchResult>; // search result
 
 
+  /**
+   * constructor
+   * @param {NewsService} newService, service for remote data fetching
+   */
   constructor(private newService: NewsService) {
     this.tags = [
       {value: 'story', displayName: 'story'},
@@ -42,8 +51,10 @@ export class SearchComponent implements OnInit {
       hitsPerPage: new FormControl(this.hitsPerPages[0]),
       term: new FormControl('')
     }, {updateOn: 'change'});
+
+    // any form input change will trigger refresh
     this.searchForm.valueChanges.subscribe((data) => {
-      this.curPage = 0;
+      this.curPage = 0; // set page to 0, since search condition changed
       this.searchTerms.next(this.searchForm.value);
     });
 
